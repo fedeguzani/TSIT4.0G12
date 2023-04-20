@@ -7,4 +7,4 @@ Garza Ribana,
 Mario pelliza,
 Federico Guzman.
 
-*El repositorio contiene 3 archivos de modo de prueba sujeto a cambios y/o avances.
+
