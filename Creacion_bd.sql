@@ -1,5 +1,7 @@
 create database big_bread_sa;
-use big_bread_sa;
+
+//el siguiente codigo es para utilizarlo desde python //
+
 CREATE TABLE productos (
   id INT PRIMARY KEY ,
   nombre VARCHAR(100) NOT NULL,
