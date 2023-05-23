@@ -13,4 +13,4 @@ elif variableAuxiliar == 2:
     conn = Conector.conexion.cerrar_conexion()
     print("Gracias por cerrar la Base de Datos.")
 else:
-    print("Opción inválida. Por favor, ingrese una opción válida (1 o 2).")
+    conn = print("Opción inválida. Por favor, ingrese una opción válida (1 o 2).")
