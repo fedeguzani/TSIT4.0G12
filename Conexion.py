@@ -8,7 +8,7 @@ class Conectar():
                 port=3306,
                 user='root',
                 password='Hillairet92,',
-                database='big_bread_sa'
+                database='big_bread_s'
             )
             if self.conexion.is_connected():
                 print("LA CONEXION FUE EXITOSA")
