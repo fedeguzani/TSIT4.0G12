@@ -1,4 +1,4 @@
-create database big_bread_sa;
+create database big_bread_s;
 
 //el siguiente codigo es para utilizarlo desde python //
 
