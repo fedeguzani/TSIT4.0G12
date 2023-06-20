@@ -25,3 +25,4 @@ class Productos:
 
     def cerrar_conexion(self):
         self.conexion.cerrar_conexion()
+
