@@ -2,13 +2,18 @@ from conexion import Conexion
 from insumos import Insumos
 from produccion_diaria import ProduccionDiaria
 from recetas import Recetas
+from productos import Productos
+
+
 
 def mostrar_menu():
     print("===== MENÚ PRINCIPAL =====")
     print("1. Insumos")
     print("2. Producción Diaria")
     print("3. Recetas")
+    print("4. Productos")  # Agregado: Opción para productos
     print("0. Salir")
+
 
 def mostrar_menu_insumos():
     print("===== MENÚ INSUMOS =====")
@@ -33,6 +38,17 @@ def mostrar_menu_recetas():
     print("3. Editar receta")
     print("4. Eliminar receta")
     print("0. Volver al menú principal")
+
+def mostrar_menu_productos():
+    print("===== MENÚ PRODUCTOS =====")
+    print("1. Listar productos")
+    print("2. Agregar producto")
+    print("3. Editar producto")
+    print("4. Eliminar producto")
+    print("0. Volver al menú principal")
+
+
+
 
 def ejecutar_menu_insumos():
     conexion = Conexion("host", "port", "user", "password", "database")
@@ -233,7 +249,7 @@ def agregar_receta(recetas):
     cantidad = input("Ingrese la cantidad requerida del insumo en la receta: ")
 
     if producto_id and insumo_id and cantidad:
-        if recetas.insertar_receta(producto_id, insumo_id, cantidad):
+        if recetas.agregar_receta(producto_id, insumo_id, cantidad):
             print("Receta agregada exitosamente.")
         else:
             print("Error al agregar la receta.")
@@ -298,6 +314,83 @@ def obtener_produccion_total_dia(produccion_diaria):
         print("Fecha es un campo obligatorio.")
 
 
+def ejecutar_menu_productos():
+    conexion = Conexion("host", "port", "user", "password", "database")
+    productos = Productos(conexion)
+
+    while True:
+        mostrar_menu_productos()
+        opcion = input("Ingrese una opción: ")
+
+        if opcion == "1":
+            listar_productos(productos)
+        elif opcion == "2":
+            agregar_producto(productos)
+        elif opcion == "3":
+            editar_producto(productos)
+        elif opcion == "4":
+            eliminar_producto(productos)
+        elif opcion == "0":
+            break
+        else:
+            print("Opción inválida. Intente nuevamente.")
+
+    productos.cerrar_conexion()
+
+def listar_productos(productos):
+    print("===== LISTA DE PRODUCTOS =====")
+    lista_productos = productos.listar_productos()
+
+    if lista_productos:
+        for producto in lista_productos:
+            print(f"ID: {producto[0]} | Nombre: {producto[1]} | Descripción: {producto[2]} | Precio: {producto[3]}")
+    else:
+        print("No se encontraron productos.")
+
+
+def agregar_producto(productos):
+    print("===== AGREGAR PRODUCTO =====")
+    id_producto = 0
+    nombre = input("Ingrese el nombre del producto: ")
+    descripcion = input("Ingrese la descripción del producto: ")
+    precio = input("Ingrese el precio del producto: ")
+
+    if  nombre and descripcion and precio:
+        if productos.insertar_producto(id_producto, nombre, descripcion, precio):
+            print("Producto agregado exitosamente.")
+        else:
+            print("Error al agregar el producto.")
+    else:
+        print(" nombre, descripción y precio son campos obligatorios.")
+
+def editar_producto(productos):
+    print("===== EDITAR PRODUCTO =====")
+    id_producto = input("Ingrese el ID del producto a editar: ")
+    nombre = input("Ingrese el nuevo nombre del producto: ")
+    descripcion = input("Ingrese la nueva descripción del producto: ")
+    precio = input("Ingrese el nuevo precio del producto: ")
+
+    if id_producto and nombre and descripcion and precio:
+        if productos.editar_producto(id_producto, nombre, descripcion, precio):
+            print("Producto editado exitosamente.")
+        else:
+            print("Error al editar el producto.")
+    else:
+        print("ID, nombre, descripción y precio son campos obligatorios.")
+
+def eliminar_producto(productos):
+    print("===== ELIMINAR PRODUCTO =====")
+    id_producto = input("Ingrese el ID del producto a eliminar: ")
+
+    if id_producto:
+        if productos.eliminar_producto(id_producto):
+            print("Producto eliminado exitosamente.")
+        else:
+            print("Error al eliminar el producto.")
+    else:
+        print("ID del producto es un campo obligatorio.")
+
+
 # Programa principal
 conexion = Conexion("host", "port", "user", "password", "database")
 
@@ -311,6 +404,8 @@ while True:
         ejecutar_menu_produccion_diaria()
     elif opcion == "3":
         ejecutar_menu_recetas()
+    elif opcion == "4":
+        ejecutar_menu_productos()
     elif opcion == "0":
         break
     else:
